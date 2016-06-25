@@ -18,18 +18,5 @@ var parser = function(tree, dest){
 }
 
 
-var nodeFactory = function(node) {
-    let element = document.createElement(node.selector)
-    element.textContent = node.value
-    element.onclick = node.onclick
-    styleFactory.call(element, node.style)
-    return element
-}
-
-var styleFactory = function (style){
-  for (let prop in style){
-    this.style[prop] = style[prop]
-  }
-}
 
 export {bootstrap}
