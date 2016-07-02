@@ -1,7 +1,19 @@
 import {vdom} from './vdom.js'
 
-class Component {
+class $Dom {
   constructor(){
+    this['$dom'] = {
+      indexes : []
+    }
+  }
+  addIndex(index,nodeRef){
+    this['$dom'].indexes.push({index:index,ref:nodeRef})
+  }
+}
+
+class Component extends $Dom{
+  constructor(){
+    super()
     this.state = {}
   }
   setState(state){
@@ -9,5 +21,6 @@ class Component {
     vdom.changeState(state,this)
   }
 }
+
 
 export {Component}

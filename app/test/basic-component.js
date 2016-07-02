@@ -47,4 +47,5 @@ class BasicComponent extends Component {
     return template
   }
 }
+
 export {BasicComponent}

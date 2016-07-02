@@ -1,39 +1,41 @@
 import {Component} from './component.js'
+import {vdom} from './vdom.js'
 
 export default class Node {
 
   constructor (selector,props,childNodes = []){
     this.tagName = selector
     this.props = props || {}
-    this.childNodes = childNodes.map((item) => {
-      if(Object.getPrototypeOf(item) == Component){
-        item = new item().template()
-      }
-      return item
-    })
+    this.childNodes = childNodes;
   }
 
-  build (parent){
-    let elem
-    this.props.index = globalindex
-    elem = document.createElement(this.tagName)
+  build (owner,parent){
+    let elem = createNode(this)
+    ownerPipe.call(elem,owner,this.props)
     propsPipe.call(elem,this.props)
-    this.childNodes.forEach((node) => {
-      node.build(elem,++globalindex)
-    })
-    if (!parent) {
-      return elem
-    }
-    if (parent) {
-      parent.appendChild(elem)
-    }
+    childPipe.call(elem,this.childNodes,owner)
+    return append.call(elem,parent)
   }
 }
-let globalindex = 0
+function createNode(node){
+  node.props.index = vdom.indexing()
+  return document.createElement(node.tagName)
+}
 
+function ownerPipe(owner,props){
+  owner.addIndex(props.index,this)
+}
 
-function indexing(){
-
+function childPipe(child,owner){
+  child.forEach((node) => {
+    if(Object.getPrototypeOf(node) == Component){
+      let component = new node()
+      let template = component.template()
+      template.build(component,this)
+    }else{
+      node.build(owner,this)
+    }
+  })
 }
 
 function propsPipe (props) {
@@ -45,13 +47,13 @@ function propsPipe (props) {
   }
 }
 
-var stylePipe = function (props){
+function stylePipe (props){
   for (let prop in props.style){
     this.style[prop] = props.style[prop]
   }
 }
 
-var handlerPipe = function(props){
+function handlerPipe (props){
   const handlers = ['onclick']
   for (let handler of handlers){
     if(props[handler]){
@@ -60,14 +62,15 @@ var handlerPipe = function(props){
   }
 }
 
-var valuePipe = function (props){
+function valuePipe (props){
   this.textContent = props.value
 }
 
-var appendPipe = function(innerElems){
-  if (innerElems) {
-    for (let item of innerElems){
-      this.appendChild(item)
-    }
+function append (parent){
+  if (!parent) {
+    return this
+  }
+  if (parent) {
+    parent.appendChild(this)
   }
 }

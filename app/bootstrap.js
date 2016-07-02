@@ -1,8 +1,7 @@
 import {vdom} from './vdom.js'
 
-var bootstrap = function(tree,root){
-  tree = new tree().template()
-  let rdom = vdom.init(tree)
+var bootstrap = function(component,root){
+  let rdom = vdom.init(component)
   root.appendChild(rdom)
 }
 
