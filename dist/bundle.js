@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -44,193 +44,49 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var _core = __webpack_require__(1);
-	
-	var _creater = __webpack_require__(2);
-	
-	var outerStyle = {
-	  backgroundColor: 'green',
-	  width: '100%',
-	  height: '600px'
-	};
-	var innerStyle = {
-	  backgroundColor: 'yellow',
-	  width: '100%',
-	  height: '500px'
-	};
-	var h1Style = {
-	  fontSize: '40px',
-	  textAlign: 'center',
-	  color: 'white'
-	};
-	
-	var root = document.getElementById('root');
-	var h1 = _creater.factory.createElement('h1', { style: h1Style, value: 'Hello world' });
-	var inner = _creater.factory.createElement('div', { style: innerStyle }, h1);
-	var outer = _creater.factory.createElement('div', { style: outerStyle, onclick: function onclick() {
-	    console.log('hello world');
-	  } }, inner);
-	
-	root.appendChild(outer);
-	// bootstrap(outer, root)
+	eval("'use strict';\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _bootstrap = __webpack_require__(1);\n\nvar _component = __webpack_require__(3);\n\nvar _creater = __webpack_require__(4);\n\nvar _basicComponent = __webpack_require__(6);\n\nvar _extendedComponent = __webpack_require__(7);\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar RenderComponent = function (_Component) {\n  _inherits(RenderComponent, _Component);\n\n  function RenderComponent() {\n    _classCallCheck(this, RenderComponent);\n\n    return _possibleConstructorReturn(this, Object.getPrototypeOf(RenderComponent).apply(this, arguments));\n  }\n\n  _createClass(RenderComponent, [{\n    key: 'template',\n    value: function template() {\n      var template = _creater.factory.createElement('div', null, _basicComponent.BasicComponent, _extendedComponent.ExtendedComponent);\n      return template;\n    }\n  }]);\n\n  return RenderComponent;\n}(_component.Component);\n\nvar root = document.getElementById('root');\n\n(0, _bootstrap.bootstrap)(RenderComponent, root);\n\n//\n// let h1 = factory.createElement('h1', {style: h1Style, value : 'Hello world'})\n// let inner = factory.createElement('div', {style:innerStyle},h1)\n// let inner1 = factory.createElement('div', {style:innerStyle},h1)\n// let inner2 = factory.createElement('div', {style:innerStyle},h1)\n// let inner3 = factory.createElement('div', {style:innerStyle},h1)\n// let inner4 = factory.createElement('div', {style:innerStyle},h1)\n// let outer = factory.createElement('div', {style:outerStyle,onclick:function(){console.log('hello world')}},inner4,inner3,inner2,inner1,inner)\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/test/test.js\n ** module id = 0\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/test/test.js?");
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var bootstrap = function bootstrap(tree, root) {
-	  var fragment = document.createDocumentFragment();
-	  parser(tree, fragment);
-	  root.appendChild(fragment);
-	};
-	
-	var parser = function parser(tree, dest) {
-	  if (tree.length == 0) {
-	    return;
-	  }
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-	
-	  try {
-	    for (var _iterator = tree[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var node = _step.value;
-	
-	      var element = nodeFactory(node);
-	      dest.appendChild(element);
-	      if (node.child) {
-	        parser(node.child, element);
-	      }
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator.return) {
-	        _iterator.return();
-	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
-	      }
-	    }
-	  }
-	};
-	
-	exports.bootstrap = bootstrap;
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.bootstrap = undefined;\n\nvar _vdom = __webpack_require__(2);\n\nvar bootstrap = function bootstrap(tree, root) {\n  tree = new tree().template();\n  var rdom = _vdom.vdom.init(tree);\n  root.appendChild(rdom);\n};\n\nexports.bootstrap = bootstrap;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/bootstrap.js\n ** module id = 1\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/bootstrap.js?");
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	// import {virtualDom} from './virtual-dom.js';
-	
-	var factory = {
-	  createElement: createElement
-	};
-	
-	function createElement(selector, props) {
-	  var element = document.createElement(selector);
-	  propsPipe.call(element, props);
-	
-	  for (var _len = arguments.length, innerElems = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-	    innerElems[_key - 2] = arguments[_key];
-	  }
-	
-	  appendPipe.call(element, innerElems);
-	  return element;
-	}
-	
-	var propsPipe = function propsPipe(props) {
-	  stylePipe.call(this, props);
-	  handlerPipe.call(this, props);
-	  valuePipe.call(this, props);
-	};
-	
-	var stylePipe = function stylePipe(props) {
-	  for (var prop in props.style) {
-	    this.style[prop] = props.style[prop];
-	  }
-	};
-	
-	var handlerPipe = function handlerPipe(props) {
-	  var handlers = ['onclick'];
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-	
-	  try {
-	    for (var _iterator = handlers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var handler = _step.value;
-	
-	      if (props[handler]) {
-	        this[handler] = props[handler];
-	      }
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator.return) {
-	        _iterator.return();
-	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
-	      }
-	    }
-	  }
-	};
-	
-	var valuePipe = function valuePipe(props) {
-	  this.textContent = props.value;
-	};
-	
-	var appendPipe = function appendPipe(innerElems) {
-	  if (innerElems) {
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-	
-	    try {
-	      for (var _iterator2 = innerElems[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	        var item = _step2.value;
-	
-	        this.appendChild(item);
-	      }
-	    } catch (err) {
-	      _didIteratorError2 = true;
-	      _iteratorError2 = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	          _iterator2.return();
-	        }
-	      } finally {
-	        if (_didIteratorError2) {
-	          throw _iteratorError2;
-	        }
-	      }
-	    }
-	  }
-	};
-	
-	exports.factory = factory;
+	eval("\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar dom = void 0;\nvar vdom = {\n  init: init,\n  changeState: changeState\n};\n\nfunction init(nodeTree) {\n  dom = nodeTree;\n  return nodeTree.build();\n}\n\nfunction changeState(state, component) {\n  console.log(dom);\n}\n\nexports.vdom = vdom;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/vdom.js\n ** module id = 2\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/vdom.js?");
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.Component = undefined;\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _vdom = __webpack_require__(2);\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Component = function () {\n  function Component() {\n    _classCallCheck(this, Component);\n\n    this.state = {};\n  }\n\n  _createClass(Component, [{\n    key: 'setState',\n    value: function setState(state) {\n      this.state = state;\n      _vdom.vdom.changeState(state, this);\n    }\n  }]);\n\n  return Component;\n}();\n\nexports.Component = Component;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/component.js\n ** module id = 3\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/component.js?");
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.factory = undefined;\n\nvar _node = __webpack_require__(5);\n\nvar _node2 = _interopRequireDefault(_node);\n\nvar _component = __webpack_require__(3);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar factory = {\n  createElement: createElement\n};\n\nfunction createElement(selector, props) {\n  for (var _len = arguments.length, childNodes = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {\n    childNodes[_key - 2] = arguments[_key];\n  }\n\n  return new _node2.default(selector, props, childNodes);\n}\n\nexports.factory = factory;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/creater.js\n ** module id = 4\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/creater.js?");
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _component = __webpack_require__(3);\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Node = function () {\n  function Node(selector, props) {\n    var childNodes = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];\n\n    _classCallCheck(this, Node);\n\n    this.tagName = selector;\n    this.props = props || {};\n    this.childNodes = childNodes.map(function (item) {\n      if (Object.getPrototypeOf(item) == _component.Component) {\n        item = new item().template();\n      }\n      return item;\n    });\n  }\n\n  _createClass(Node, [{\n    key: 'build',\n    value: function build(parent) {\n      var elem = void 0;\n      this.props.index = globalindex;\n      elem = document.createElement(this.tagName);\n      propsPipe.call(elem, this.props);\n      this.childNodes.forEach(function (node) {\n        node.build(elem, ++globalindex);\n      });\n      if (!parent) {\n        return elem;\n      }\n      if (parent) {\n        parent.appendChild(elem);\n      }\n    }\n  }]);\n\n  return Node;\n}();\n\nexports.default = Node;\n\nvar globalindex = 0;\n\nfunction indexing() {}\n\nfunction propsPipe(props) {\n  if (props) {\n    this.setAttribute('index', props.index);\n    stylePipe.call(this, props);\n    handlerPipe.call(this, props);\n    valuePipe.call(this, props);\n  }\n}\n\nvar stylePipe = function stylePipe(props) {\n  for (var prop in props.style) {\n    this.style[prop] = props.style[prop];\n  }\n};\n\nvar handlerPipe = function handlerPipe(props) {\n  var handlers = ['onclick'];\n  var _iteratorNormalCompletion = true;\n  var _didIteratorError = false;\n  var _iteratorError = undefined;\n\n  try {\n    for (var _iterator = handlers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {\n      var handler = _step.value;\n\n      if (props[handler]) {\n        this[handler] = props[handler];\n      }\n    }\n  } catch (err) {\n    _didIteratorError = true;\n    _iteratorError = err;\n  } finally {\n    try {\n      if (!_iteratorNormalCompletion && _iterator.return) {\n        _iterator.return();\n      }\n    } finally {\n      if (_didIteratorError) {\n        throw _iteratorError;\n      }\n    }\n  }\n};\n\nvar valuePipe = function valuePipe(props) {\n  this.textContent = props.value;\n};\n\nvar appendPipe = function appendPipe(innerElems) {\n  if (innerElems) {\n    var _iteratorNormalCompletion2 = true;\n    var _didIteratorError2 = false;\n    var _iteratorError2 = undefined;\n\n    try {\n      for (var _iterator2 = innerElems[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {\n        var item = _step2.value;\n\n        this.appendChild(item);\n      }\n    } catch (err) {\n      _didIteratorError2 = true;\n      _iteratorError2 = err;\n    } finally {\n      try {\n        if (!_iteratorNormalCompletion2 && _iterator2.return) {\n          _iterator2.return();\n        }\n      } finally {\n        if (_didIteratorError2) {\n          throw _iteratorError2;\n        }\n      }\n    }\n  }\n};\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/node.js\n ** module id = 5\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/node.js?");
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.BasicComponent = undefined;\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _component = __webpack_require__(3);\n\nvar _creater = __webpack_require__(4);\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar outerStyle = {\n  backgroundColor: 'blue',\n  width: '100%',\n  height: '100%',\n  cursor: 'pointer'\n};\nvar innerStyle = {\n  backgroundColor: 'yellow',\n  width: '100%',\n  height: '100px'\n};\nvar h1Style = {\n  fontSize: '40px',\n  textAlign: 'center',\n  color: 'white'\n};\n\nvar BasicComponent = function (_Component) {\n  _inherits(BasicComponent, _Component);\n\n  function BasicComponent() {\n    _classCallCheck(this, BasicComponent);\n\n    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicComponent).call(this));\n\n    _this.state = {\n      outer: outerStyle,\n      inner: innerStyle,\n      h1: h1Style\n    };\n    _this.basic = 'Basic';\n    return _this;\n  }\n\n  _createClass(BasicComponent, [{\n    key: 'clickHandler',\n    value: function clickHandler(e) {\n      console.log(this);\n      this.setState({\n        inner: { backgroundColor: 'green' }\n      });\n    }\n  }, {\n    key: 'template',\n    value: function template() {\n      var template = void 0;\n      template = _creater.factory.createElement('div', { style: this.state.outer, onclick: this.clickHandler.bind(this) }, _creater.factory.createElement('div', { style: this.state.inner }, _creater.factory.createElement('h1', { style: this.state.h1, value: 'Hello basic' })));\n      return template;\n    }\n  }]);\n\n  return BasicComponent;\n}(_component.Component);\n\nexports.BasicComponent = BasicComponent;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/test/basic-component.js\n ** module id = 6\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/test/basic-component.js?");
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.ExtendedComponent = undefined;\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _component = __webpack_require__(3);\n\nvar _creater = __webpack_require__(4);\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar outerStyle = {\n  backgroundColor: 'blue',\n  width: '100%',\n  height: '100%',\n  cursor: 'pointer'\n};\nvar innerStyle = {\n  backgroundColor: 'yellow',\n  width: '100%',\n  height: '100px'\n};\nvar h1Style = {\n  fontSize: '40px',\n  textAlign: 'center',\n  color: 'white'\n};\n\nvar ExtendedComponent = function (_Component) {\n  _inherits(ExtendedComponent, _Component);\n\n  function ExtendedComponent() {\n    _classCallCheck(this, ExtendedComponent);\n\n    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExtendedComponent).call(this));\n\n    _this.state = {\n      outer: outerStyle,\n      inner: innerStyle,\n      h1: h1Style\n    };\n    _this.extended = 'extended';\n    return _this;\n  }\n\n  _createClass(ExtendedComponent, [{\n    key: 'clickHandler',\n    value: function clickHandler(e) {\n      console.log(this);\n      this.setState({\n        inner: { backgroundColor: 'green' }\n      });\n    }\n  }, {\n    key: 'template',\n    value: function template() {\n      var template = void 0;\n      template = _creater.factory.createElement('div', { style: this.state.outer, onclick: this.clickHandler.bind(this) }, _creater.factory.createElement('div', { style: this.state.inner }, _creater.factory.createElement('h1', { style: this.state.h1, value: 'Hello extended' })));\n      return template;\n    }\n  }]);\n\n  return ExtendedComponent;\n}(_component.Component);\n\nexports.ExtendedComponent = ExtendedComponent;\n\n/*****************\n ** WEBPACK FOOTER\n ** ./app/test/extended-component.js\n ** module id = 7\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./app/test/extended-component.js?");
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
