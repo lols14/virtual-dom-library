@@ -1,30 +1,36 @@
 let dom
+
 let vdom = {
   init : init,
   changeState : changeState,
-  indexing : counter()
+  indexing : counter(),
+  buildComponent : buildComponent
 }
 
-
-
 function init(root){
-  return build(root)
+  return buildComponent(root)
 }
 
 function changeState(state,component){
-  console.log(dom);
+  console.log(state,component);
 }
 
-function build(root){
-  let rootComponent = new root()
-  let rootTemplate = rootComponent.template()
-  return rootTemplate.build(rootComponent)
+function buildComponent(Component,element){
+  let builded = new Component()
+  let template = builded.template()
+  builded.addRef(template)
+  return template.build(builded,element)
 }
 
 function counter(){
+  let level = 0
   let index = 0
-  return function(){
-    return index++
+  return function(update){
+    if (update) {
+      level++
+      index = 0
+    }
+    return level+'.'+index++
   }
 }
 

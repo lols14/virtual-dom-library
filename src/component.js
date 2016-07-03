@@ -3,11 +3,15 @@ import {vdom} from './vdom.js'
 class $Dom {
   constructor(){
     this['$dom'] = {
-      indexes : []
+      indexes : [],
+      vdomRef : {}
     }
   }
   addIndex(index,nodeRef){
-    this['$dom'].indexes.push({index:index,ref:nodeRef})
+    this['$dom'].indexes.push(index)
+  }
+  addRef(node){
+    this['$dom'].vdomRef = node
   }
 }
 
@@ -17,7 +21,6 @@ class Component extends $Dom{
     this.state = {}
   }
   setState(state){
-    this.state = state
     vdom.changeState(state,this)
   }
 }

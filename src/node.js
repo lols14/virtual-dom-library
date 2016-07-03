@@ -11,27 +11,29 @@ export default class Node {
 
   build (owner,parent){
     let elem = createNode(this)
-    ownerPipe.call(elem,owner,this.props)
+    ownerPipe.call(elem,owner,this.props,this)
     propsPipe.call(elem,this.props)
     childPipe.call(elem,this.childNodes,owner)
     return append.call(elem,parent)
   }
+
 }
+
 function createNode(node){
   node.props.index = vdom.indexing()
   return document.createElement(node.tagName)
 }
 
-function ownerPipe(owner,props){
+function ownerPipe(owner,props,parent){
+  // owner.addRef(parent)
   owner.addIndex(props.index,this)
 }
 
 function childPipe(child,owner){
+  child.length > 0 ? vdom.indexing(true) : noop()
   child.forEach((node) => {
     if(Object.getPrototypeOf(node) == Component){
-      let component = new node()
-      let template = component.template()
-      template.build(component,this)
+      vdom.buildComponent(node,this)
     }else{
       node.build(owner,this)
     }
@@ -74,3 +76,5 @@ function append (parent){
     parent.appendChild(this)
   }
 }
+
+function noop(){}
