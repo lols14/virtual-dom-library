@@ -29,7 +29,6 @@ class ExtendedComponent extends Component {
      this.extended = 'extended'
    }
   clickHandler(e){
-    console.log(this);
     this.setState({
       inner:{backgroundColor:'green'}
     })

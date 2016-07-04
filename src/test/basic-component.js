@@ -29,7 +29,6 @@ class BasicComponent extends Component {
      this.basic = 'Basic'
    }
   clickHandler(e){
-    console.log(this);
     this.setState({
       inner:{backgroundColor:'green'}
     })

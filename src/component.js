@@ -10,8 +10,15 @@ class $Dom {
   addIndex(index,nodeRef){
     this['$dom'].indexes.push(index)
   }
-  addRef(node){
+  addvRef(node){
     this['$dom'].vdomRef = node
+  }
+  addrRef(node){
+    this['$dom'].rdomRef = node
+  }
+  getTree(){
+    let template = this.template();
+    return template
   }
 }
 

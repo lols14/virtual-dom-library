@@ -1,4 +1,3 @@
-import {Component} from './component.js'
 import {vdom} from './vdom.js'
 
 export default class Node {
@@ -9,25 +8,25 @@ export default class Node {
     this.childNodes = childNodes;
   }
 
-  build (owner,parent){
+  create (index){
     let elem = createNode(this)
-    ownerPipe.call(elem,owner,this.props,this)
+    // this.props.index = index
     propsPipe.call(elem,this.props)
-    childPipe.call(elem,this.childNodes,owner)
-    return append.call(elem,parent)
+    // childPipe.call(elem,this.childNodes,owner)
+    // return append.call(elem,parent)
+    return elem
   }
 
 }
 
 function createNode(node){
-  node.props.index = vdom.indexing()
   return document.createElement(node.tagName)
 }
 
-function ownerPipe(owner,props,parent){
-  // owner.addRef(parent)
-  owner.addIndex(props.index,this)
-}
+// function ownerPipe(owner,props,parent){
+//   owner.addrRef(this)
+//   owner.addIndex(props.index,this)
+// }
 
 function childPipe(child,owner){
   child.length > 0 ? vdom.indexing(true) : noop()
