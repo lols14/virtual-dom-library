@@ -10,62 +10,85 @@ let vdom = {
 }
 
 function init(root){
-  let stack = []
   let node = buildNode(root)
   let roots = node
-  let done = false
   node.root = 'true'
+
+  if (node.childNodes.length == 0) return
+  traversing(node)
+}
+function traversing(tree){
+  let stack = []
   let depth = 0
-  if (node.childNodes.length == 0) {
-    return
-  }
-  while (!done){
-    let index, parent
+  let node = tree
+
+  while (loopCondition(node,stack)){
+    let index, parent, traverseBack, traversedAllChildOnCurrentLevel
     stack[depth] ? index = stack[depth].index : index = 0
-    console.log(stack.length, node);
-    if (!node && stack.length == 0) {
-      done = true
-      break
-    }
-    if (stack[depth] && !node) {
-      if(index == stack[depth].parent.childNodes.length -1){
+    traverseBack = stack[depth] && !node
+
+    if (traverseBack) {
+
+      parent = stack[depth].parent
+      traversedAllChildOnCurrentLevel = index == parent.childNodes.length - 1
+
+      if(traversedAllChildOnCurrentLevel){
+
         depth --
         stack.pop()
+
       } else {
-        index =  ++stack[depth].index
-        node = buildNode(stack[depth].parent.childNodes[index])
-        stack[depth].parent.childNodes[index] = node
-        depth++
+
+        node = parent
+        stack[depth].index++
+
       }
-    }else {
-      parent = node
-      node = node.childNodes[index]
-      node = buildNode(node)
-      if (node != null) {
+    } else {
+
+      if ( node  ) {
+        parent = node
+        node = node.childNodes[index]
+        node = buildNode(node)
         parent.childNodes[index] = node
-        stack.push({index:index,parent:parent})
+        stackPush(stack,index,parent)
         depth ++
-      }else{
+
+      } else {
+
         depth--
+
       }
     }
   }
-  console.log(roots);
-}
-function addToStack(node){
-  childNodes
-}
-function changeState(state,component){
-  console.log(component);
-  console.log(dom);
+  console.log(tree);
+  return tree
 }
 
+function stackPush(stack,index,parent){
+  if (index > 0) {
+    stack.pop()
+  }
+  stack.push({index:index, parent:parent})
+}
+
+function loopCondition(node, stack){
+  if (!node && stack.length == 0) {
+    return false
+  }
+  return true
+}
+
+function parentInit(node,index){
+  if (index > 0) {
+    node = buildNode(node)
+  }
+  return node
+}
+
+
+
 function buildNode(node,element){
-    let vnode
-    let rnode
-    vnode = buildVNode(node)
-    // rnode = buildRNode(vnode)
-    return vnode
+    return buildVNode(node)
 }
 
 function buildVNode(node){
@@ -81,18 +104,9 @@ function buildRNode(node){
   return node.create()
 }
 
-
-function counter(){
-  let level = 0
-  let index = 0
-  return function(update){
-    if (update) {
-      level++
-      index = 0
-    }
-    return level+'.'+index++
-  }
+function changeState(state,component){
+  console.log(component);
+  console.log(dom);
 }
-
 
 export {vdom}
