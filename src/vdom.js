@@ -12,6 +12,7 @@ let vdom = {
 function init(root){
   let stack = []
   let node = buildNode(root)
+  let roots = node
   let done = false
   node.root = 'true'
   let depth = 0
@@ -19,30 +20,37 @@ function init(root){
     return
   }
   while (!done){
-    debugger
     let index, parent
     stack[depth] ? index = stack[depth].index : index = 0
-    // && stack[depth].parent.childNodes.length - 1 == index
-    if (stack[depth-1] && !node) {
-      depth --
-      stack.pop()
-      node = stack[depth-1].parent
-    } else if(stack[depth] && node != null){
-      node = stack[depth].parent
-      stack[depth].index ++
+    console.log(stack.length, node);
+    if (!node && stack.length == 0) {
+      done = true
+      break
+    }
+    if (stack[depth] && !node) {
+      if(index == stack[depth].parent.childNodes.length -1){
+        depth --
+        stack.pop()
+      } else {
+        index =  ++stack[depth].index
+        node = buildNode(stack[depth].parent.childNodes[index])
+        stack[depth].parent.childNodes[index] = node
+        depth++
+      }
     }else {
       parent = node
       node = node.childNodes[index]
       node = buildNode(node)
       if (node != null) {
+        parent.childNodes[index] = node
         stack.push({index:index,parent:parent})
         depth ++
+      }else{
+        depth--
       }
     }
-    if (node != null && node.root) {
-      done = true
-    }
   }
+  console.log(roots);
 }
 function addToStack(node){
   childNodes
