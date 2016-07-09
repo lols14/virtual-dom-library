@@ -11,31 +11,27 @@ import {Component} from './component'
  */
 
 function traverseMediator(options){
+  let stack = []
+  let depth = 0
   let node = buildVNode(options.root)
-  if (options.init) {
-    node.root = true
-  }
+  let handler = handlerPrepare(options.handler.bind(options.handlerResult) || noop)
   let vDom = node
-  let handler = (options.handler || noop).bind(options.handlerResult)
-  traversingLoop(node,handler)
+  if (options.init) node.root = true
+  handler({node,stack,depth})
+  traversingLoop(node,handler,stack,depth)
   return {vDom, handlerResult : options.handlerResult}
 }
 
-function traversingLoop(node,handler){
-  let stack = []
-  let depth = 0
-  handler({node:node})
+function traversingLoop(node,handler,stack,depth){
 
   while (traversingCondition(node,stack)){
     let index, parent, traverseBack, traversedAllChildOnCurrentLevel, iterProps
-
     stack[depth] ? index = stack[depth].index : index = 0
     traverseBack = stack[depth] && !node
-
     if (traverseBack) {
 
       parent = stack[depth].parent.v
-      traversedAllChildOnCurrentLevel = index == parent.childNodes.length - 1
+      traversedAllChildOnCurrentLevel = (index == parent.childNodes.length - 1 || parent.childNodes.length == 0)
 
       if(traversedAllChildOnCurrentLevel){
 
@@ -55,12 +51,15 @@ function traversingLoop(node,handler){
 
         parent = node
         node = node.childNodes[index]
-        node = buildVNode(node)
-        parent.childNodes[index] = node
+        if(node){
+          node = buildVNode(node)
+          node.parent = parent
+          parent.childNodes[index] = node
+        }
         iterProps = propsInit(node,stack,depth,index,parent)
         indexing(iterProps)
-        stackPush(iterProps)
         handler(iterProps)
+        stackPush(iterProps)
         depth ++
 
       } else {
@@ -73,10 +72,11 @@ function traversingLoop(node,handler){
 }
 
 function stackPush(props){
+  let {parent,index,node} = props
   if (props.index > 0) {
     props.stack.pop()
   }
-  props.stack.push({index:props.index, parent:{ v:props.parent}})
+  props.stack.push({parent,index,node})
 }
 
 function traversingCondition(node, stack){
@@ -87,7 +87,7 @@ function traversingCondition(node, stack){
 }
 
 function propsInit(node,stack,depth,index,parent){
-  return {node,stack,depth,index,parent}
+  return {node,stack,depth,index,parent:{v:parent}}
 }
 
 function indexing(props){
@@ -99,12 +99,20 @@ function indexing(props){
 }
 
 function buildVNode(node){
-  if (node == null) {
-    return
-  }else if(Object.getPrototypeOf(node) == Component){
+  if(Object.getPrototypeOf(node) == Component){
     node = new node().getTree()
   }
   return node
+}
+
+function handlerPrepare(handler){
+  let origin = handler
+  return function(props){
+    let node = props.node
+    if (node && !node.ref) {
+      origin(props)
+    }
+  }
 }
 
 

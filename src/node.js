@@ -10,7 +10,7 @@ export default class Node {
 
   create (){
     let elem = createNode(this)
-    propsPipe.call(elem,this.props)
+    propsPipe.call(elem,this.props,this.index)
     return elem
   }
 
@@ -20,25 +20,10 @@ function createNode(node){
   return document.createElement(node.tagName)
 }
 
-// function ownerPipe(owner,props,parent){
-//   owner.addrRef(this)
-//   owner.addIndex(props.index,this)
-// }
-
-function childPipe(child,owner){
-  child.length > 0 ? vdom.indexing(true) : noop()
-  child.forEach((node) => {
-    if(Object.getPrototypeOf(node) == Component){
-      vdom.buildComponent(node,this)
-    }else{
-      node.build(owner,this)
-    }
-  })
-}
-
-function propsPipe (props) {
+function propsPipe (props,index) {
   if (props) {
-    this.setAttribute('index',props.index)
+    index = index || 'root'
+    this.setAttribute('index',index)
     stylePipe.call(this,props)
     handlerPipe.call(this,props)
     valuePipe.call(this,props)
@@ -62,15 +47,6 @@ function handlerPipe (props){
 
 function valuePipe (props){
   this.textContent = props.value
-}
-
-function append (parent){
-  if (!parent) {
-    return this
-  }
-  if (parent) {
-    parent.appendChild(this)
-  }
 }
 
 function noop(){}

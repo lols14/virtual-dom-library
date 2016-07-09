@@ -7,10 +7,10 @@ let vdom = {
 
 function init(root){
   let traverseResult
-  traverseResult = traverseMediator({init:true, root:root})
-  console.log(traverseResult);
+  traverseResult = traverseMediator({init:true, root:root, handler:initRDom, handlerResult:{}})
+  return traverseResult.handlerResult.root
 }
-// , handler:initRDom, handlerResult:{}
+
 function parentInit(node,index){
   if (index > 0) {
     node = buildNode(node)
@@ -20,16 +20,16 @@ function parentInit(node,index){
 
 
 function initRDom(options){
-  if(options.node){
-    if (options.node.root == true) {
-      this.DOM = options.node.create()
-      options.node.ref = this.DOM
-      this.parent = this.DOM
-    }else{
-      let domNode = options.node.create()
-      this.parent.appendChild(domNode)
-      this.parent = domNode
-    }
+  let domNode
+  let {node} = options
+  if (node.root) {
+    this.root = node.create()
+    this.parent = this.root
+    node.ref = this.root
+  } else {
+    domNode = node.create()
+    node.parent.ref.appendChild(domNode)
+    node.ref = domNode
   }
 }
 
@@ -39,6 +39,5 @@ function changeState(state,component){
 }
 
 
-function noop() {}
 
 export {vdom}
