@@ -11,6 +11,7 @@ export default class Node {
   create (){
     let elem = createNode(this)
     propsPipe.call(elem,this.props,this.index)
+
     return elem
   }
 

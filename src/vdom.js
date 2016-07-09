@@ -1,14 +1,18 @@
 import {traverseMediator} from './traversing'
-let dom
+
 let vdom = {
   init : init,
-  changeState : changeState
+  changeState : changeState,
+  vtree : {},
+  rtree : {}
 }
 
 function init(root){
-  let traverseResult
-  traverseResult = traverseMediator({init:true, root:root, handler:initRDom, handlerResult:{}})
-  return traverseResult.handlerResult.root
+  let result
+  result = traverseMediator({init:true, root:root, handler:initRdom, handlerResult:{}})
+  vdom.vtree = result.vdom
+  vdom.rtree = result.handlerResult.root
+  return vdom.rtree
 }
 
 function parentInit(node,index){
@@ -19,7 +23,7 @@ function parentInit(node,index){
 }
 
 
-function initRDom(options){
+function initRdom(options){
   let domNode
   let {node} = options
   if (node.root) {
@@ -35,9 +39,7 @@ function initRDom(options){
 
 function changeState(state,component){
   console.log(component);
-  console.log(dom);
 }
-
 
 
 export {vdom}
