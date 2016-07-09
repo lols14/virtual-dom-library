@@ -8,12 +8,9 @@ export default class Node {
     this.childNodes = childNodes;
   }
 
-  create (index){
+  create (){
     let elem = createNode(this)
-    // this.props.index = index
     propsPipe.call(elem,this.props)
-    // childPipe.call(elem,this.childNodes,owner)
-    // return append.call(elem,parent)
     return elem
   }
 

@@ -1,82 +1,16 @@
-import {Component} from './component.js'
-
+import {traverseMediator} from './traversing'
 let dom
-
 let vdom = {
   init : init,
   changeState : changeState
 }
 
 function init(root){
-  let node = buildNode(root)
-  let roots = node
-  node.root = true
-
-  if (node.childNodes.length == 0) return
-  traversing(node)
+  let traverseResult
+  traverseResult = traverseMediator({init:true, root:root})
+  console.log(traverseResult);
 }
-
-function traversing(tree){
-  let stack = []
-  let depth = 0
-  let node = tree
-
-  while (loopCondition(node,stack)){
-    let index, parent, traverseBack, traversedAllChildOnCurrentLevel
-    stack[depth] ? index = stack[depth].index : index = 0
-    traverseBack = stack[depth] && !node
-    if (traverseBack) {
-
-      parent = stack[depth].parent
-      traversedAllChildOnCurrentLevel = index == parent.childNodes.length - 1
-
-      if(traversedAllChildOnCurrentLevel){
-
-        depth --
-        stack.pop()
-
-      } else {
-
-        node = parent
-        stack[depth].index++
-
-      }
-    } else {
-
-      if ( node  ) {
-        parent = node
-        node = node.childNodes[index]
-        node = buildNode(node)
-        parent.childNodes[index] = node
-        indexing(node,stack,depth,index)
-        stackPush(stack, index, parent)
-        depth ++
-
-      } else {
-
-        depth--
-
-      }
-    }
-  }
-  console.log(tree);
-  return tree
-}
-
-function stackPush(stack,index,parent){
-  if (index > 0) {
-    stack.pop()
-  }
-  stack.push({index:index, parent:parent})
-}
-
-function loopCondition(node, stack){
-  if (!node && stack.length == 0) {
-    return false
-  }
-  return true
-}
-
+// , handler:initRDom, handlerResult:{}
 function parentInit(node,index){
   if (index > 0) {
     node = buildNode(node)
@@ -85,22 +19,18 @@ function parentInit(node,index){
 }
 
 
-
-function buildNode(node,element){
-    return buildVNode(node)
-}
-
-function buildVNode(node){
-  if (node == null) {
-    return
-  }else if(Object.getPrototypeOf(node) == Component){
-    node = new node().getTree()
+function initRDom(options){
+  if(options.node){
+    if (options.node.root == true) {
+      this.DOM = options.node.create()
+      options.node.ref = this.DOM
+      this.parent = this.DOM
+    }else{
+      let domNode = options.node.create()
+      this.parent.appendChild(domNode)
+      this.parent = domNode
+    }
   }
-  return node
-}
-
-function buildRNode(node){
-  return node.create()
 }
 
 function changeState(state,component){
@@ -108,11 +38,7 @@ function changeState(state,component){
   console.log(dom);
 }
 
-function indexing(node,stack,depth,index){
-  if (node && !node.index){
-    index = [depth,index]
-    node.index = index.join('.')
-  }
-}
+
+function noop() {}
 
 export {vdom}
