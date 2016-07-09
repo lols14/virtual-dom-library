@@ -42,6 +42,9 @@ class ExtendedComponent extends Component {
       factory.createElement('di6', {style:this.state.inner},
         factory.createElement('div7', {style: this.state.h1, value : 'Hello extended'},
         BasicComponent,
+        BasicComponent,
+        BasicComponent,
+        BasicComponent,
         BasicComponent
         )
       )

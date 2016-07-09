@@ -4,19 +4,18 @@ let dom
 
 let vdom = {
   init : init,
-  changeState : changeState,
-  indexing : counter()
-
+  changeState : changeState
 }
 
 function init(root){
   let node = buildNode(root)
   let roots = node
-  node.root = 'true'
+  node.root = true
 
   if (node.childNodes.length == 0) return
   traversing(node)
 }
+
 function traversing(tree){
   let stack = []
   let depth = 0
@@ -26,7 +25,6 @@ function traversing(tree){
     let index, parent, traverseBack, traversedAllChildOnCurrentLevel
     stack[depth] ? index = stack[depth].index : index = 0
     traverseBack = stack[depth] && !node
-
     if (traverseBack) {
 
       parent = stack[depth].parent
@@ -50,7 +48,8 @@ function traversing(tree){
         node = node.childNodes[index]
         node = buildNode(node)
         parent.childNodes[index] = node
-        stackPush(stack,index,parent)
+        indexing(node,stack,depth,index)
+        stackPush(stack, index, parent)
         depth ++
 
       } else {
@@ -107,6 +106,13 @@ function buildRNode(node){
 function changeState(state,component){
   console.log(component);
   console.log(dom);
+}
+
+function indexing(node,stack,depth,index){
+  if (node && !node.index){
+    index = [depth,index]
+    node.index = index.join('.')
+  }
 }
 
 export {vdom}
