@@ -2,15 +2,17 @@ import {Component} from '../component.js'
 import {factory} from '../creater.js'
 
 let outerStyle = {
-  backgroundColor : 'blue',
+  backgroundColor : 'yellow',
   width : '100%',
   height : '100%',
   cursor : 'pointer'
 }
 let innerStyle = {
-  backgroundColor : 'yellow',
-  width : '100%',
-  height : '100px'
+  backgroundColor : 'brown',
+  width : '32%',
+  display : 'inline-block',
+  height : '100px',
+  margin : '10px'
 }
 let h1Style = {
   fontSize : '40px',
@@ -24,25 +26,33 @@ class BasicComponent extends Component {
      this.state = {
        outer : outerStyle,
        inner : innerStyle,
-       h1 : h1Style
+       h1 : h1Style,
+       rows : [{name:'item1'},{name:'item2'},{name:'item3'}]
      }
      this.basic = 'Basic'
    }
-  clickHandler(e){
-    this.setState({
-      inner:{backgroundColor:'green'}
-    })
+
+  remove (index, item, event){
+    let state = _.cloneDeep(this.state)
+    state.rows.splice(index,1)
+    this.setState(state)
   }
 
   template (){
-    let template
-    template =
-    factory.createElement('div', {style:this.state.outer,onclick:this.clickHandler.bind(this)},
-      factory.createElement('div', {style:this.state.inner},
-        factory.createElement('h1', {style: this.state.h1, value : 'Hello basic'}
-        )
+    let rows = this.state.rows.map( (item, index) =>{
+       return factory.createElement('div',
+          {key:index,
+           style:this.state.inner,
+           onclick:this.remove.bind(this,index,item)},
+
+          factory.createElement('h1',
+              {style: this.state.h1,
+               value : item.name}
+          )
       )
-    )
+    })
+
+    let template = factory.createElement('div', {style:this.state.outer}, rows)
     return template
   }
 }

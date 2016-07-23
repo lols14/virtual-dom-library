@@ -1,3 +1,4 @@
+var webpack = require('webpack')
 module.exports = {
     entry: './src/test/test.js',
     output: {
@@ -16,5 +17,10 @@ module.exports = {
         resolve: {
             extensions: ['', '.js', '.jsx']
         }
-    }
+    },
+    plugins : [
+      new webpack.ProvidePlugin({
+        '_': 'lodash'
+      })
+    ]
 };

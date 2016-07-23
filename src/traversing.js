@@ -1,99 +1,78 @@
 import {Component} from './component'
+import {diffStrategy} from './diff-strategy'
 
-/**
- * traversing by virtual tree
- *
- * @param     {object}        options
- * @property  {node}          root
- * @property  {function}      handler
- * @property  {object}        handlerResult
- * @return    {object}
- */
-
-function traverseMediator(options){
-  let stack = []
-  let depth = 0
-  let node = buildVNode(options.root)
-  let handler = handlerPrepare(options.handler.bind(options.handlerResult) || noop)
-  let vdom = node
-  if (options.init) node.root = true
-  handler({node,stack,depth})
-  traversingLoop({node,handler,stack,depth})
-  return {vdom, handlerResult : options.handlerResult}
+let settings = {
+  floorIndex : 0
 }
 
-function traversingCondition(node, stack){
-  if (!node && stack.length == 0) {
-    return false
+function traverseMediator(options) {
+  let tree
+  switch (options.type) {
+    case 'init':
+      tree = initRecursion(options.root)
+      break;
+    case 'diff':
+      tree =  diffRecursion(options.oldTree, options.newTree)
+      break;
   }
-  return true
+  return tree
 }
 
-function traversingLoop(props){
-  let {stack} = props
-  while (traversingCondition(props.node,stack)){
-    let traverseBack
-    stack[props.depth] ? props.index = stack[props.depth].index : props.index = 0
-    traverseBack = stack[props.depth] && !props.node
-    if (traverseBack) {
-      goBack(props)
-    } else {
-      goForward(props)
-    }
-  }
-  function goBack(props){
-    let parent,traversedAllChildOnCurrentLevel
-    parent = props.stack[props.depth].parent.v
-    traversedAllChildOnCurrentLevel = (props.index == parent.childNodes.length - 1 || parent.childNodes.length == 0)
-    if(traversedAllChildOnCurrentLevel){
-      props.depth --
-      props.stack.pop()
-    } else {
-      props.node = parent
-      stack[props.depth].index++
-    }
-  }
 
-  function goForward(props){
-    let iterProps,parent
-    if (props.node) {
-      parent = props.node
-      props.node = props.node.childNodes[props.index]
-      if(props.node){
-        props.node = buildVNode(props.node)
-        props.node.parent = parent
-        parent.childNodes[props.index] = props.node
-      }
-      iterProps = propsInit(props,parent)
-      indexing(iterProps)
-      props.handler(iterProps)
-      stackPush(iterProps)
-      props.depth ++
-    } else {
-      props.depth--
-    }
+function initRecursion(node, parent) {
+  let vNode, rNode, nodes
+  vNode = buildVNode(node)
+  setParent(vNode, parent)
+  rNode = vNode.create();
+  vNode.ref = rNode
+  vNode.childNodes = vNode.childNodes.map((childNode,index) => {
+    nodes = initRecursion(childNode, vNode)
+    rNode.appendChild(nodes.rNode)
+    return nodes.vNode
+  })
+  return {vNode, rNode}
+}
+
+function diffRecursion(oldTree, newTree){
+    diffStrategy.basic(oldTree,newTree);
+    diffChildRecursion(oldTree,newTree)
+}
+
+function diffChildRecursion(oldTree,newTree){
+  let oldLength = oldTree.childNodes.length
+  let newLength = newTree.childNodes.length
+  let length =  oldLength > newLength ? oldLength : newLength
+  while (length) {
+    debugger
+    oldTree = oldTree.childNodes[length-1]
+    newTree = newTree.childNodes[length-1]
+    diffRecursion.basic(oldTree,newTree)
+    length--
   }
 }
 
-function propsInit(props,parent){
-  let {node,stack,depth,index} = props
-  return {node,stack,depth,index,parent:{v:parent}}
+// function indexing(node){
+//   let index
+//   if (node.parent) {
+//     index = node.parent.index + '.' + settings.floorIndex++
+//   }else {
+//     index = '0'
+//   }
+//   node.index = index
+// }
+// function resetFloorIndex(){
+//   settings.floorIndex = 0
+// }
+
+function setParent(node, parent){
+  if (parent) {
+    node.parent = parent
+  }
+  // indexing(node)
 }
 
-function stackPush(props){
-  let {index,node,parent} = props
-  if (props.index > 0) {
-    props.stack.pop()
-  }
-  props.stack.push({parent,index,node})
-}
-
-function indexing(props){
-  let index
-  if (props.node && !props.node.index){
-    index = [props.depth,props.index]
-    props.node.index = index.join('.')
-  }
+function buildRNode(node){
+  return node.create();
 }
 
 function buildVNode(node){
@@ -102,19 +81,12 @@ function buildVNode(node){
     node = component.getTree()
     component.setvRef(node)
   }
+
   return node
 }
 
-function handlerPrepare(handler){
-  let origin = handler
-  return function(props){
-    let node = props.node
-    if (node && !node.ref) {
-      origin(props)
-    }
-  }
+function noop() {}
+
+export {
+  traverseMediator
 }
-
-function noop(){}
-
-export {traverseMediator}

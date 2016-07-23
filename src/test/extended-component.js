@@ -11,7 +11,7 @@ let outerStyle = {
 let innerStyle = {
   backgroundColor : 'yellow',
   width : '100%',
-  height : '100px'
+  height : '100%',
 }
 let h1Style = {
   fontSize : '40px',
@@ -20,7 +20,7 @@ let h1Style = {
 }
 
 class ExtendedComponent extends Component {
-   constructor(){
+  constructor(){
      super()
      this.state = {
        outer : outerStyle,
@@ -29,10 +29,11 @@ class ExtendedComponent extends Component {
      }
      this.extended = 'extended'
    }
+
   clickHandler(e){
-    this.setState({
-      inner:{backgroundColor:'green'}
-    })
+    let state = _.cloneDeep(this.state)
+    state.inner.backgroundColor = 'green'
+    this.setState(state)
   }
 
   template (){

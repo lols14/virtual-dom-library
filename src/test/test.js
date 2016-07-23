@@ -14,7 +14,7 @@ let blockStyle = {
 class RenderComponent extends Component{
   template(){
     let template =
-    factory.createElement('div1',null,
+    factory.createElement('div',null,
       BasicComponent,
       ExtendedComponent
     )

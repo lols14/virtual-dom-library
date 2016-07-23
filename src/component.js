@@ -15,10 +15,6 @@ class $Dom {
     return this.template();
   }
 
-  // updateTree(){
-  //   return this.getTree()
-  // }
-
 }
 
 class Component extends $Dom{
