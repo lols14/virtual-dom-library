@@ -3,7 +3,6 @@ import {vdom} from './vdom.js'
 class $Dom {
   constructor(){
     this['$dom'] = {
-      indexes : [],
       vdomRef : {}
     }
   }
@@ -13,9 +12,13 @@ class $Dom {
   }
 
   getTree(){
-    let template = this.template();
-    return template
+    return this.template();
   }
+
+  // updateTree(){
+  //   return this.getTree()
+  // }
+
 }
 
 class Component extends $Dom{
@@ -25,12 +28,14 @@ class Component extends $Dom{
   }
 
   setState(state){
-    console.log(state,this.state);
     if (state != this.state) {
-      console.log(true);
+      this.state = state
+      let oldTree = this.$dom.vdomRef
+      let newTree = this.getTree()
+      vdom.diff(oldTree, newTree)
     }
-    vdom.changeState(state,this)
   }
+
 }
 
 

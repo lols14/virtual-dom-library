@@ -32,7 +32,6 @@ function traversingCondition(node, stack){
 function traversingLoop(props){
   let {stack} = props
   while (traversingCondition(props.node,stack)){
-    // debugger
     let traverseBack
     stack[props.depth] ? props.index = stack[props.depth].index : props.index = 0
     traverseBack = stack[props.depth] && !props.node
@@ -54,6 +53,7 @@ function traversingLoop(props){
       stack[props.depth].index++
     }
   }
+
   function goForward(props){
     let iterProps,parent
     if (props.node) {

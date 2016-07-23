@@ -2,7 +2,7 @@ import {traverseMediator} from './traversing'
 
 let vdom = {
   init : init,
-  changeState : changeState,
+  diff : diff,
   vtree : {},
   rtree : {}
 }
@@ -37,9 +37,15 @@ function initRdom(options){
   }
 }
 
-function changeState(state,component){
-  console.log(component);
+function diff(oldTree, newTree, patch){
+  patch = []
+  diffPipe(oldTree, newTree);
 }
+
+function diffPipe(oldTree, newTree){
+  console.log(oldTree, newTree);
+}
+
 
 
 export {vdom}
