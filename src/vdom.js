@@ -1,4 +1,4 @@
-import {traverseMediator} from './traversing'
+import {traverseMediator} from './_traversing'
 import {Component} from './component'
 
 let vdom = {

@@ -20,7 +20,9 @@ module.exports = {
     },
     plugins : [
       new webpack.ProvidePlugin({
-        '_': 'lodash'
+        '_': 'lodash',
+        'hash': 'object-hash',
+        deepDiff : 'deep-diff'
       })
     ]
 };

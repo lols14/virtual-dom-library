@@ -39,8 +39,11 @@ class ExtendedComponent extends Component {
   template (){
     let template
     template =
+
     factory.createElement('div', {style:this.state.outer,onclick:this.clickHandler.bind(this)},
+
       factory.createElement('div', {style:this.state.inner},
+
         factory.createElement('h1', {style: this.state.h1, value : 'Hello extended'}
         )
       )

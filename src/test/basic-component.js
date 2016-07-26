@@ -27,13 +27,18 @@ class BasicComponent extends Component {
        outer : outerStyle,
        inner : innerStyle,
        h1 : h1Style,
-       rows : [{name:'item1'},{name:'item2'},{name:'item3'}]
+       rows : [
+         {name:'item1'},
+         {name:'item2'},
+         {name:'item3'}]
      }
      this.basic = 'Basic'
    }
 
   remove (index, item, event){
     let state = _.cloneDeep(this.state)
+    state.outer.color = 'red'
+    delete state.outer.backgroundColor
     state.rows.splice(index,1)
     this.setState(state)
   }

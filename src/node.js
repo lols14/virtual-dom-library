@@ -5,6 +5,7 @@ export default class Node {
   constructor (selector,props,childNodes = []){
     this.tagName = selector
     this.props = props || {}
+    this.hash = hash({selector, props})
     this.childNodes = childNodes;
   }
 
