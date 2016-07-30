@@ -41,18 +41,10 @@ export default class Node {
   valuePipe (elem){
     elem.textContent = this.props.value
   }
-
-
-
 }
 
 function createNode(node){
   return document.createElement(node.tagName)
 }
-
-
-
-
-
 
 function noop(){}

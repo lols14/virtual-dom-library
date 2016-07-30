@@ -3,26 +3,38 @@ let diffService = {
   diff : diff
 }
 
-function diff (oldNode, newNode){
-  let result = { props : {}, node : {} }
-  nodeDiff(oldNode,newNode, result)
-
+function diff (oldNode, newNode, oldParent){
+  let patch = {}
   if (oldNode && newNode) {
-    propsDiff(oldNode,newNode, result)
+    propsDiff(oldNode,newNode, patch)
+    childNodesPrepare(oldNode, newNode, patch)
   }
-  return result
+  return patch
 }
 
-function nodeDiff(oldNode, newNode, result){
-  let addCase = !oldNode && newNode
-  let deleteCase = oldNode && !newNode
-  if (addCase) {
-    console.log('hello add case');
+function childNodesPrepare(oldNode, newNode,patch) {
+  let oldArr = oldNode.childNodes
+  let newArr = newNode.childNodes
+  let move = []
+  let temp
+
+  for (var i = 0; i < newArr.length; i++) {
+    let newItem = newArr[i]
+    for (var j = 0; j < oldArr.length; j++) {
+      let oldItem = oldArr[j]
+      if (newItem.hash == oldItem.hash && i != j) {
+        temp = oldArr[i]
+        oldArr[i] = oldItem
+        oldArr[j] = temp
+        move.push({from:j,to:i })
+      }
+    }
   }
-  if (deleteCase) {
-    nodeDelete(oldNode, newNode)
+  if (move.length > 0) {
+    patch.moveChild = move
   }
 }
+
 
 function nodeDelete(oldNode, newNode) {
   let oldParent = oldNode.parent
@@ -32,29 +44,29 @@ function nodeDelete(oldNode, newNode) {
   })
 }
 
-function propsDiff(oldNode, newNode, result){
-  styleDiff(oldNode, newNode, result)
-  valueDiff(oldNode ,newNode, result)
-}
-
-function styleDiff(oldNode, newNode, result){
-  let diff = deepDiff.diff(oldNode.props.style, newNode.props.style)
-  if (diff) {
-    result.props.style = diff.reduce(diffreducer, {D:{},E:{}} )
+function propsDiff(oldNode, newNode, patch){
+  if (oldNode.hash != newNode.hash) {
+    styleDiff(oldNode, newNode, patch)
+    valueDiff(oldNode ,newNode, patch)
   }
 }
 
-function valueDiff(oldNode, newNode, result){
-  let diff = deepDiff.diff(oldNode.props.value, newNode.props.value)
+function styleDiff(oldNode, newNode, patch){
+  let diff = deepDiff.diff(oldNode.props.style, newNode.props.style)
   if (diff) {
-    result.props.value = diff.reduce(diffreducer, {D:{},E:{}} )
+    patch.style = diff.reduce(diffreducer, {D:{},E:{}} )
+  }
+}
+
+function valueDiff(oldNode, newNode, patch){
+  if (oldNode.props.value != newNode.props.value){
+    patch.value = newNode.props.value
   }
 }
 
 
 function diffreducer (accum, item){
     let prop = item.path[0]
-    console.log(accum,item);
     switch (item.kind) {
       case 'D':
         let valueD = item.lhs

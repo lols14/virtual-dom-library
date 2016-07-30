@@ -30,7 +30,8 @@ class BasicComponent extends Component {
        rows : [
          {name:'item1'},
          {name:'item2'},
-         {name:'item3'}]
+         {name:'item3'},
+         {name:'item4'}]
      }
      this.basic = 'Basic'
    }
@@ -39,7 +40,12 @@ class BasicComponent extends Component {
     let state = _.cloneDeep(this.state)
     state.outer.color = 'red'
     delete state.outer.backgroundColor
-    state.rows.splice(index,1)
+    // state.rows.splice(index,1)
+    state.rows = [
+      {name:'item4'},
+      {name:'item1'},
+      {name:'foobarbaz'}
+    ]
     this.setState(state)
   }
 

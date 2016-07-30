@@ -30,68 +30,25 @@ function initRecursion(node, parent) {
   return {vNode, rNode}
 }
 
-function diffRecursion(oldTree, newTree, parent){
-  let length,
-      oldChildNode,
-      newChildNode,
-      isDeleted,
-      isChanged,
-      iterateProps,
-      patch
-
-  patch = diffService.diff(oldTree, newTree)
-  iterateProps = childArrPrepare(oldTree, newTre)
-
-  while (length > 0){
-    oldChildNode = oldTree.childNodes[length -1]
-    newChildNode = newTree.childNodes[length -1]
-    isChanged = !isDeleted && (oldChildNode.hash != newChildNode.hash)
-    // if (isChanged) {
-    //   oldChildNode,newChildNode
-    //   diffRecursion(oldChildNode, newChildNode)
-    // }
-    // if (isDeleted) {
-    //
-    // }
-    length --
+function diffRecursion(oldTree, newTree, oldTreeParent){
+  let patch
+  let length
+  let index
+  patch = diffService.diff(oldTree, newTree, oldTreeParent)
+  patchService.patch(patch, oldTree, newTree)
+  if (oldTree && newTree) {
+    let oldArr = oldTree.childNodes
+    let newArr = newTree.childNodes
+    length = oldArr.length > newArr.length
+      ? length = oldArr.length
+      : length = newArr.length
+      index = 0
+      while (index<length){
+        diffRecursion(oldArr[index],newArr[index],oldArr)
+        index++
+      }
   }
 }
-
-
-function childArrPrepare(oldTree, newArr) {
-  let result = {}
-  let oldArr = oldTree.childNodes
-  let newArr = newTree.childNodes
-  let sameCount = oldArr.length == newArr.length
-  let remove = oldArr.length > newArr.length
-  let add = oldArr.length < newArr.length
-
-  if (sameCount) {
-    result.length = oldArr.length
-  }
-  if (remove) {
-    result.type = 'remove'
-    result.length = oldArr.length
-  }
-  if (add) {
-    result.type = 'add'
-    result.length = newArr.length
-  }
-  arrayReshuffle(oldArr, newArr, result.type)
-  return result
-}
-
-function arrayReshuffle(oldArr, newArr, type){
-  let keyMap = []
-    type == 'remove'
-      ? oldArr.map(handler)
-      : newArr.map(handler)
-
-    function handler(item, index){
-
-    }
-}
-
 
 function setParent(node, parent){
   if (parent) {
@@ -109,7 +66,6 @@ function buildVNode(node){
     node = component.getTree()
     component.setvRef(node)
   }
-
   return node
 }
 
