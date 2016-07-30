@@ -31,21 +31,28 @@ class BasicComponent extends Component {
          {name:'item1'},
          {name:'item2'},
          {name:'item3'},
-         {name:'item4'}]
+         {name:'item4'},
+         {name:'item5'},
+         {name:'item6'},
+         {name:'item7'},
+         {name:'item8'}]
      }
      this.basic = 'Basic'
    }
 
   remove (index, item, event){
     let state = _.cloneDeep(this.state)
-    state.outer.color = 'red'
-    delete state.outer.backgroundColor
-    // state.rows.splice(index,1)
-    state.rows = [
-      {name:'item4'},
-      {name:'item1'},
-      {name:'foobarbaz'}
-    ]
+    // state.outer.color = 'red'
+    // delete state.outer.backgroundColor
+    state.rows.splice(index,1)
+    // state.rows = [
+    //   {name:'item4'},
+    //   {name:'item1'},
+    //   {name:'foobarbaz'},
+    //   {name:'foobarbaz1'},
+    //   {name:'foobarbaz2'},
+    //   {name:'foobarbaz3'}
+    // ]
     this.setState(state)
   }
 

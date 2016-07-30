@@ -1,10 +1,14 @@
+import {traverseMediator} from './_traversing'
+
 let patchService = {
   patch : patch
 }
 
-function patch (patch,oldNode,newNode){
+function patch (patch,oldNode,newNode,oldNodeParent){
   stylePatch(patch,oldNode)
   valuePatch(patch,oldNode)
+  nodeDeletePatch(patch,oldNode)
+  nodeAddPatch(patch,newNode,oldNodeParent)
 }
 
 function stylePatch(patch,oldNode){
@@ -25,8 +29,22 @@ function stylePatch(patch,oldNode){
 
 function valuePatch(patch,oldNode){
   if (patch.value) {
-    console.log(patch.value);
     oldNode.ref.textContent = patch.value
+  }
+}
+
+function nodeDeletePatch(patch,oldNode){
+  if (patch.toDelete) {
+    oldNode.parent.ref.removeChild(oldNode.ref)
+  }
+}
+
+function nodeAddPatch(patch,newNode, oldNodeParent){
+  if (patch.toAdd) {
+    let tree = traverseMediator({type: 'init', root: newNode })
+    tree.vNode.parent = oldNodeParent
+    oldNodeParent.childNodes.push(tree.vNode)
+    oldNodeParent.ref.appendChild(tree.rNode)
   }
 }
 

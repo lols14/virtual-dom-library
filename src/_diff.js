@@ -5,10 +5,23 @@ let diffService = {
 
 function diff (oldNode, newNode, oldParent){
   let patch = {}
-  if (oldNode && newNode) {
+  let deleteNode = oldNode && !newNode
+  let addNode =  newNode && !oldNode
+  let nodeDiff = oldNode && newNode
+
+  if (nodeDiff) {
     propsDiff(oldNode,newNode, patch)
     childNodesPrepare(oldNode, newNode, patch)
   }
+
+  if (deleteNode) {
+    nodeDelete(patch)
+  }
+
+  if (addNode) {
+    nodeAdd(patch)
+  }
+
   return patch
 }
 
@@ -36,12 +49,12 @@ function childNodesPrepare(oldNode, newNode,patch) {
 }
 
 
-function nodeDelete(oldNode, newNode) {
-  let oldParent = oldNode.parent
-  let newParent = newNode.parent
-  oldParent.childNodes.map( (node, index) =>{
-    console.log(node,index);
-  })
+function nodeDelete(patch) {
+  patch.toDelete = true
+}
+
+function nodeAdd(patch){
+  patch.toAdd = true
 }
 
 function propsDiff(oldNode, newNode, patch){
