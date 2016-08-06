@@ -34,19 +34,29 @@ function diffRecursion(oldTree, newTree, oldTreeParent){
   let patch
   let length
   let index
+
   patch = diffService.diff(oldTree, newTree)
   patchService.patch(patch, oldTree, newTree, oldTreeParent)
+
   if (oldTree && newTree) {
     let oldArr = oldTree.childNodes
     let newArr = newTree.childNodes
+
     length = oldArr.length > newArr.length
       ? length = oldArr.length
       : length = newArr.length
       index = 0
-      while (index<length){
-        diffRecursion(oldArr[index],newArr[index],oldTree)
-        index++
+
+    while (index<length){
+      diffRecursion(oldArr[index],newArr[index],oldTree)
+      index++
+    }
+    oldTree.childNodes = oldTree.childNodes.filter( (item) =>{
+      if (item) {
+        return true
       }
+    }
+   )
   }
 }
 

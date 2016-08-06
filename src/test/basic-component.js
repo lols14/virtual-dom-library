@@ -37,22 +37,19 @@ class BasicComponent extends Component {
          {name:'item7'},
          {name:'item8'}]
      }
+     this.index = 9
      this.basic = 'Basic'
    }
 
   remove (index, item, event){
     let state = _.cloneDeep(this.state)
-    // state.outer.color = 'red'
-    // delete state.outer.backgroundColor
     state.rows.splice(index,1)
-    // state.rows = [
-    //   {name:'item4'},
-    //   {name:'item1'},
-    //   {name:'foobarbaz'},
-    //   {name:'foobarbaz1'},
-    //   {name:'foobarbaz2'},
-    //   {name:'foobarbaz3'}
-    // ]
+    this.setState(state)
+  }
+
+  add (){
+    let state = _.cloneDeep(this.state)
+    state.rows.push({name:'item'+this.index++})
     this.setState(state)
   }
 
@@ -70,7 +67,11 @@ class BasicComponent extends Component {
       )
     })
 
-    let template = factory.createElement('div', {style:this.state.outer}, rows)
+    let template =
+    factory.createElement('div',{},
+      factory.createElement('button', {value:'addItem', onclick:this.add.bind(this)}, []),
+      factory.createElement('div', {style:this.state.outer},rows)
+    )
     return template
   }
 }

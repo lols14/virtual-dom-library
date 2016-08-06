@@ -7,7 +7,7 @@ let patchService = {
 function patch (patch,oldNode,newNode,oldNodeParent){
   stylePatch(patch,oldNode)
   valuePatch(patch,oldNode)
-  nodeDeletePatch(patch,oldNode)
+  nodeDeletePatch(patch,oldNode, oldNodeParent)
   nodeAddPatch(patch,newNode,oldNodeParent)
 }
 
@@ -33,8 +33,9 @@ function valuePatch(patch,oldNode){
   }
 }
 
-function nodeDeletePatch(patch,oldNode){
+function nodeDeletePatch(patch,oldNode, oldNodeParent){
   if (patch.toDelete) {
+    oldNodeParent.childNodes[oldNodeParent.childNodes.indexOf(oldNode)] = undefined
     oldNode.parent.ref.removeChild(oldNode.ref)
   }
 }
@@ -47,5 +48,6 @@ function nodeAddPatch(patch,newNode, oldNodeParent){
     oldNodeParent.ref.appendChild(tree.rNode)
   }
 }
+
 
 export {patchService}

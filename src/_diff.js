@@ -30,7 +30,6 @@ function childNodesPrepare(oldNode, newNode,patch) {
   let newArr = newNode.childNodes
   let move = []
   let temp
-
   for (var i = 0; i < newArr.length; i++) {
     let newItem = newArr[i]
     for (var j = 0; j < oldArr.length; j++) {
