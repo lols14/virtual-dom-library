@@ -1,6 +1,6 @@
 var webpack = require('webpack')
 module.exports = {
-    entry: './src/test/test.js',
+    entry: './src/examples/test.js',
     output: {
         filename: './dist/bundle.js'
     },

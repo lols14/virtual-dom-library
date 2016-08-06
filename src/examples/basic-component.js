@@ -68,10 +68,10 @@ class BasicComponent extends Component {
     })
 
     let template =
-    factory.createElement('div',{},
-      factory.createElement('button', {value:'addItem', onclick:this.add.bind(this)}, []),
-      factory.createElement('div', {style:this.state.outer},rows)
-    )
+      factory.createElement('div',{},
+        factory.createElement('button', {value:'addItem', onclick:this.add.bind(this)}, []),
+        factory.createElement('div', {style:this.state.outer},rows)
+      )
     return template
   }
 }
