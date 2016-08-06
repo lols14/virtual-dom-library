@@ -18,7 +18,7 @@ import {factory} from '../creater.js'
 class BasicComponent extends Component {
 	constructor (){
     	this.state = {
-     		value : "hello world
+     		value : "hello world"
             styles : {backgroundColor:'green', color:'white'}
     	}
     }
