@@ -1,6 +1,6 @@
 ## Virtual-dom-library
 Element
-```
+``` javascript
 factory.createElement('div', {style:this.state.outer,onclick:this.clickHandler.bind(this)},
   factory.createElement('div', {style:this.state.inner},
     factory.createElement('h1', {style: this.state.h1, value : 'Hello from Element'}
@@ -11,7 +11,7 @@ factory.createElement('div', {style:this.state.outer,onclick:this.clickHandler.b
 
 
 Component 
-```
+``` javascript
 import {Component} from '../component.js'
 import {factory} from '../creater.js'
 
@@ -31,7 +31,7 @@ There is only one difference between the element and the component.
 Component is **statefull**, element - **stateless**.
 
 When Component inited by bootstrap function
-```
+``` javascript
 import {bootstrap} from '../bootstrap.js'
 import {BasicComponent} from './basic-component.js'
 import {ExtendedComponent} from './extended-component.js'
@@ -47,6 +47,16 @@ class RenderComponent extends Component{
 }
 
 bootstrap(RenderComponent, root)
-
 ```
+
+Each Element && Component is represented by structure - that is called virtual DOM
+``` javascript
+  childNodes:Array[2]
+  hash:"3d916d8725b1877560c073f15148af160f7d494d"
+  props:Object
+  ref:div
+  tagName:"div"
+```
+
+
 
