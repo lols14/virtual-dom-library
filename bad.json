@@ -1,0 +1,28 @@
+{
+    "statuses": [{
+            "title": "Database",
+            "active": "1",
+            "label": "Works fine"
+        },
+        {
+            "title": "Server",
+            "active": "2",
+            "label": "Lost packages"
+        },
+        {
+            "title": "Other key",
+            "active": "0",
+            "label": "Critical error"
+        }
+    ],
+    "pages": [{
+        "title": "stackshare",
+        "url": "https://stackshare.io/categories"
+    }, {
+        "title": "stackshare",
+        "url": "https://stackshare.io/nodejs"
+    }, {
+        "title": "ukr.net",
+        "url": "http://ukr.net"
+    }]
+}
