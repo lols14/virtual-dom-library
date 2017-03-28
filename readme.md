@@ -1,4 +1,7 @@
 ## Virtual-dom-library
+
+It is educational project
+
 Element
 ``` javascript
 factory.createElement('div', { style:this.state.outer, onclick:this.clickHandler.bind(this) },
