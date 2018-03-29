@@ -1,5 +1,7 @@
 ## Virtual-dom-library
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/lols14/virtual-dom-library.svg)](https://greenkeeper.io/)
+
 It is educational project
 
 Element
